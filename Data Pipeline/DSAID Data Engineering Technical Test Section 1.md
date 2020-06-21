@@ -242,3 +242,29 @@ Finally, write the results into csv file that named as dataset_updated.csv witho
 #write into csv file without the index number
 df.to_csv('dataset_updated.csv', index = False)
 ```
+
+Creating and setting up a cron job. 
+
+Convert the notebook (ipynb file) into a .py file using the following script in the command line window,
+jupyter nbconvert --to script DSAID_Data_Engineering_Technical_Test_Section_1.ipynb
+
+It generates a .py file in the same directory.
+Set up the cron job to run the new .py from the root account at 1.00 AM daily. 
+
+
+```python
+#import package
+from crontab import CronTab
+
+#access cron is by using the root account
+cron = CronTab(user='root')
+
+#set the python file to run
+job = cron.new(command='DSAID_Data_Engineering_Technical_Test_Section_1.py')
+
+#at 0 minute
+job.minute.every(0)
+#at 1.00AM
+job.hour.also.on(1)
+cron.write()
+```
